@@ -1,13 +1,4 @@
-def read_input(file_name):
-    f = None
-    try:
-        f = open(file_name, "r")
-        return [line[:-1] if line[-1] == "\n" else line for line in f]
-    except IOError:
-        print("Error while performing io operations.")
-    finally:
-        if f is not None:
-            f.close()
+import Utils
 
 
 def decode(line):
@@ -45,7 +36,6 @@ def encode(line):
 
     new_line += "\""
 
-    print(f"{line} - {len(line)} vs {len(new_line)} - {new_line}")
     return new_line
 
 
@@ -57,8 +47,8 @@ def solve(lines, transformation):
     return count
 
 
-tst_input = read_input("input/day8_tst_input.txt")
-puzzle_input = read_input("input/day8_input.txt")
+tst_input = Utils.read_input("input/day8_tst_input.txt")
+puzzle_input = Utils.read_input("input/day8_input.txt")
 
 print("Part 1")
 print(f"Test input: {solve(tst_input, decode)}.")

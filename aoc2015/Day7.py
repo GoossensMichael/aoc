@@ -1,6 +1,6 @@
-from difflib import SequenceMatcher
 import ctypes
 
+import Utils
 from input import day7_input
 
 
@@ -10,11 +10,6 @@ lshift_template = "% LSHIFT % -> %"
 rshift_template = "% RSHIFT % -> %"
 not_template = "NOT % -> %"
 constant_template = "% -> %"
-
-
-def extract(template, text):
-    seq = SequenceMatcher(None, template, text, True)
-    return [text[c:d] for tag, a, b, c, d in seq.get_opcodes() if tag == 'replace']
 
 
 def b_id(wires, x, t):
@@ -56,22 +51,22 @@ def b_not(wires, x, t):
 def parse_wires(wires, puzzle_input):
     for wiring in puzzle_input:
         if "AND" in wiring:
-            l, r, t = extract(and_template, wiring)
+            l, r, t = Utils.extract_string(and_template, wiring)
             wires[t] = lambda x = l, y = r, k = t: b_and(wires, x, y, k)
         elif "OR" in wiring:
-            l, r, t = extract(or_template, wiring)
+            l, r, t = Utils.extract_string(or_template, wiring)
             wires[t] = lambda x = l, y = r, k = t: b_or(wires, x, y, k)
         elif "LSHIFT" in wiring:
-            l, r, t = extract(lshift_template, wiring)
+            l, r, t = Utils.extract_string(lshift_template, wiring)
             wires[t] = lambda x = l, y = r, k = t: b_lshift(wires, x, y, k)
         elif "RSHIFT" in wiring:
-            l, r, t = extract(rshift_template, wiring)
+            l, r, t = Utils.extract_string(rshift_template, wiring)
             wires[t] = lambda x = l, y = r, k = t: b_rshift(wires, x, y, k)
         elif "NOT" in wiring:
-            l, t = extract(not_template, wiring)
+            l, t = Utils.extract_string(not_template, wiring)
             wires[t] = lambda x = l, k = t: b_not(wires, x, k)
         elif "->" in wiring:
-            l, t = extract(constant_template, wiring)
+            l, t = Utils.extract_string(constant_template, wiring)
             wires[t] = lambda x = l, k = t: b_id(wires, x, k)
 
 

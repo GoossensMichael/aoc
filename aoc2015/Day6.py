@@ -1,5 +1,4 @@
-from difflib import SequenceMatcher
-
+import Utils
 from input import day6_input
 
 toggle_template = "toggle %,% through %,%"
@@ -33,11 +32,6 @@ state_changes_p2 = {
 }
 
 
-def extract(template, text):
-    seq = SequenceMatcher(None, template, text, True)
-    return [int(text[c:d]) for tag, a, b, c, d in seq.get_opcodes() if tag == 'replace']
-
-
 def count(lights):
     n = 0
     for i in range(len(lights)):
@@ -54,13 +48,13 @@ def solve(puzzle_input, dimension, state_changes):
     for instruction in puzzle_input:
         operation = state_changes["do_nothing"]
         if instruction.startswith("toggle"):
-            x_b, y_b, x_e, y_e = extract(toggle_template, instruction)
+            x_b, y_b, x_e, y_e = Utils.extract_int(toggle_template, instruction)
             operation = state_changes["toggle"]
         elif instruction.startswith("turn on"):
-            x_b, y_b, x_e, y_e = extract(turn_on_template, instruction)
+            x_b, y_b, x_e, y_e = Utils.extract_int(turn_on_template, instruction)
             operation = state_changes["turn_on"]
         elif instruction.startswith("turn off"):
-            x_b, y_b, x_e, y_e = extract(turn_off_template, instruction)
+            x_b, y_b, x_e, y_e = Utils.extract_int(turn_off_template, instruction)
             operation = state_changes["turn_off"]
         else:
             raise Exception("Instruction could not be parsed: {instruction}.")
