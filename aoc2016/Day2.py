@@ -16,6 +16,8 @@ key_pad_p2 = [["0", "0", "0", "0", "0", "0", "0"],
               ["0", "0", "0", "D", "0", "0", "0"],
               ["0", "0", "0", "0", "0", "0", "0"]]
 
+d_map = {"U": (-1, 0), "R": (0, 1), "D": (1, 0), "L": (0, -1)}
+
 
 def solve(data, start_position, key_pad):
     position = (start_position[0], start_position[1])
@@ -23,16 +25,7 @@ def solve(data, start_position, key_pad):
     solution = []
     for instructions in data:
         for instruction in instructions:
-            d = (0, 0)
-            match instruction:
-                case "U":
-                    d = (-1, 0)
-                case "R":
-                    d = (0, 1)
-                case "D":
-                    d = (1, 0)
-                case "L":
-                    d = (0, -1)
+            d = d_map[instruction]
 
             new_position = (position[0] + d[0], position[1] + d[1])
             if key_pad[new_position[0]][new_position[1]] != "0":
