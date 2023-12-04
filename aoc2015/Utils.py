@@ -1,4 +1,14 @@
 from difflib import SequenceMatcher
+import aocd
+import os
+
+def download_input(year, day):
+    file_name = f"input/day{day}_input.txt"
+    if os.path.exists(file_name):
+        print(f"Input file {file_name} already exists, skipping download.")
+    else:
+        print(f"Downloading input file {file_name}.")
+        open(file_name, 'w').write(aocd.get_data(year=year, day=day))
 
 def read_input(file_name):
     f = None
