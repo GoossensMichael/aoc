@@ -52,12 +52,12 @@ def solve_p2(data):
     p_molecules.put((len(molecule_input), [0, molecule_input, []]))
     searching = True
     visited = { molecule_input }
-    min = len(molecule_input)
+    all_time_min = len(molecule_input)
     while searching:
         c_molecule = p_molecules.get()
 
-        if len(c_molecule[1][1]) <= min:
-            min = len(c_molecule[1][1])
+        if len(c_molecule[1][1]) <= all_time_min:
+            all_time_min = len(c_molecule[1][1])
             print(c_molecule)
 
         visited.add(c_molecule[1][1])
