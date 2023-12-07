@@ -8,6 +8,7 @@ p2_expected_tst_result = 0
 
 Utils.download_input(year, day)
 
+
 def solve(data):
     return 0
 
