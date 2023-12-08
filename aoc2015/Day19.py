@@ -44,7 +44,13 @@ def solve_replace(transitions, molecule_input, results):
     return results
 
 
+#Not so proud of this one tbh, sought help on the forums. Data analysis was key!
 def solve_p2(data):
+    molecule = data[-1][::]
+    return sum([1 for l in molecule if l.isupper()]) - molecule.count("Rn") - molecule.count("Ar") - 2 * molecule.count("Y") - 1
+
+
+def solve_p2_2(data):
     transitions = parse_transitions(data[:-2], True)
     molecule_input = data[-1:][0]
 
@@ -52,12 +58,12 @@ def solve_p2(data):
     p_molecules.put((len(molecule_input), [0, molecule_input, []]))
     searching = True
     visited = { molecule_input }
-    all_time_min = len(molecule_input)
+    min = len(molecule_input)
     while searching:
         c_molecule = p_molecules.get()
 
-        if len(c_molecule[1][1]) <= all_time_min:
-            all_time_min = len(c_molecule[1][1])
+        if len(c_molecule[1][1]) <= min:
+            min = len(c_molecule[1][1])
             print(c_molecule)
 
         visited.add(c_molecule[1][1])
@@ -71,19 +77,6 @@ def solve_p2(data):
                     p_molecules.put((len(n_molecule), [c_molecule[1][0] + 1, n_molecule]))
 
     return c_molecule[1][0]
-
-# CRnSiRnFYCaRnFArArFArAl
-
-    # results = {molecule_input}
-    # searching = True
-    # while searching:
-    #     if "e" in results:
-    #         searching = False
-    #     else:
-    #         new_results = [solve_replace(transitions, r, set()) for r in results]
-    #         results = set().union(*new_results)
-    #
-    # return len(results)
 
 
 def solve(data):
@@ -107,10 +100,21 @@ puzzle_input = Utils.read_input(f"input/day{day}_input.txt")
 
 print()
 print("Part 2")
-p2_tst_result = solve_p2(tst_input)
+p2_tst_result = solve_p2(tst_input) + 1
 print(f"Test solution: {p2_tst_result}.")
 if p2_tst_result == p2_expected_tst_result:
     p2_result = solve_p2(puzzle_input)
+    print(f"Puzzle solution: {p2_result}.")
+    if input("submit part 2? (y or n) - ") == "y":
+        submit(p2_result, part="b", day=day, year=year)
+
+print()
+print("Part 2 - Naïve")
+p2_tst_result = solve_p2_2(tst_input)
+print(f"Test solution: {p2_tst_result}.")
+if p2_tst_result == p2_expected_tst_result:
+    puzzle_input = Utils.read_input(f"input/day{day}_input_bc.txt")
+    p2_result = solve_p2_2(puzzle_input)
     print(f"Puzzle solution: {p2_result}.")
     if input("submit part 2? (y or n) - ") == "y":
         submit(p2_result, part="b", day=day, year=year)
