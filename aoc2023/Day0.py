@@ -1,9 +1,9 @@
 import Utils
 from aocd import submit
 
-day = 9
+day = 0
 year = 2023
-p1_expected_tst_result = -1
+p1_expected_tst_result = 4
 p2_expected_tst_result = -1
 
 Utils.download_input(year, day)
