@@ -12,6 +12,33 @@ def download_input(year, day):
         open(file_name, 'w').write(aocd.get_data(year=year, day=day))
 
 
+def coord_valid(coord, m):
+    return 0 <= coord[0] < len(m) and 0 <= coord[1] < len(m[0])
+
+
+def rotate90(coord):
+    return -coord[1], coord[0]
+
+
+def rotate_min_90(coord):
+    return coord[1], -coord[0]
+
+
+def rotate(coord, deg):
+    if deg == 90:
+        return rotate90(coord)
+    elif deg == -90:
+        return rotate_min_90(coord)
+    elif deg == 0:
+        return coord
+    else:
+        raise ValueError("Only supporting rotations 0, 90 and -90")
+
+
+def at_coord(m, coord):
+    return m[coord[0]][coord[1]]
+
+
 def read_input_flat(file_name):
     f = None
     try:
@@ -19,7 +46,8 @@ def read_input_flat(file_name):
 
         content = ""
         for line in f:
-            content += line
+            if line != "":
+                content += line
 
         return content
     except IOError:
