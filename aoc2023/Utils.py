@@ -12,6 +12,17 @@ def download_input(year, day):
         open(file_name, 'w').write(aocd.get_data(year=year, day=day))
 
 
+def tiles(data):
+    return [[t for t in l] for l in data]
+
+
+def tiles_int(data):
+    return [[int(t) for t in l] for l in data]
+
+
+def add_2d(a_2d, b_2d):
+    return a_2d[0] + b_2d[0], a_2d[1] + b_2d[1]
+
 def coord_valid(coord, m):
     return 0 <= coord[0] < len(m) and 0 <= coord[1] < len(m[0])
 
