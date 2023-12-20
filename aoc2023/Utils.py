@@ -1,6 +1,7 @@
 from difflib import SequenceMatcher
 import aocd
 import os
+import re
 
 
 def download_input(year, day):
@@ -93,5 +94,14 @@ def extract_int(template, text):
 
 # Same as above but the resulting variables are strings.
 def extract_string(template, text):
-    seq = SequenceMatcher(None, template, text, True)
-    return [text[c:d] for tag, a, b, c, d in seq.get_opcodes() if tag == 'replace']
+    # Escape special characters
+    escaped_template = re.escape(template)
+    escaped_text = re.escape(text)
+
+    # Create SequenceMatcher
+    seq = SequenceMatcher(None, escaped_template, escaped_text, True)
+
+    # Extract replaced substrings
+    return [escaped_text[c:d] for tag, a, b, c, d in seq.get_opcodes() if tag == 'replace']
+
+# Example usage
