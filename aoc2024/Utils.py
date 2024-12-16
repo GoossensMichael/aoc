@@ -104,4 +104,11 @@ def extract_string(template, text):
     # Extract replaced substrings
     return [escaped_text[c:d] for tag, a, b, c, d in seq.get_opcodes() if tag == 'replace']
 
-# Example usage
+# Print
+def print_map(m):
+    for x in range(len(m)):
+        l = ""
+        for y in range(len(m[x])):
+            l += m[x][y]
+        print(l)
+    print()
