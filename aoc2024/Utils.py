@@ -112,3 +112,19 @@ def print_map(m):
             l += m[x][y]
         print(l)
     print()
+
+def print_map_points(points):
+    max_x = max([x for x, y in points])
+    min_x = min([x for x, y in points])
+    max_y = max([y for x, y in points])
+    min_y = min([y for x, y in points])
+
+    for x in range(min_x, max_x + 1):
+        l = ""
+        for y in range(min_x, max_y + 1):
+            if (x, y) in points:
+                l += "#"
+            else:
+                l += "."
+        print(l)
+    print()
